@@ -25,9 +25,9 @@ void DriverManager::SendData(uint8_t data) {
     UBits = (data >> 4) & 0x0F; //upper 4 bits
     LBits = data & 0x0F; //lower 4 bits
 
-    drv.setRegister(&PORTA, UBits);
+    drv.setRegister(&PINA, UBits);
     //drv.delay_ms(5);  //useful? who knows idc
-    drv.setRegister(&PORTA, LBits);
+    drv.setRegister(&PINA, LBits);
 
     /* NowWriting = false;
     NowReading = true;
@@ -42,9 +42,9 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
     std::cout << "DriverManager > Sending Flag (" << static_cast<int>(FLAG) << ")" << std::endl;
 
     while (!ACK_Recieved) {
-        drv.setRegister(&PORTA, FLAG);
+        drv.setRegister(&PINA, FLAG);
         /* drv.delay_ms(10);
-        drv.setRegister(&PORTA, 0x00); */
+        drv.setRegister(&PINA, 0x00); */
         std::cout << "DriverManager > Waiting for ACK..." << std::endl;
         if (ReadData() == ACK)
             ACK_Recieved = true;
@@ -59,7 +59,7 @@ uint8_t DriverManager::ReadData() {
     /* std::unique_lock<std::mutex> lock(mutex);
     cv.wait(lock, [this]{ return NowReading; }); */
 
-    uint8_t Bits_DRV = drv.getRegister(&PORTA);
+    uint8_t Bits_DRV = drv.getRegister(&PINA);
     drv.reverse(Bits_DRV);
     uint8_t inverted_Bits = Bits_DRV  & 0x0F; //IMPORTANT FOR MIRRORED DATA !!!
     std::cout << "DriverManager > Recieved Data: " << inverted_Bits << std::endl;
