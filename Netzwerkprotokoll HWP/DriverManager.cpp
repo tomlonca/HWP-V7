@@ -6,7 +6,7 @@ DriverManager::DriverManager(B15F &drv, bool isWriter) : drv(drv) {
     drv.setRegister(&DDRA, 0x0F); //left 4 pins input, 4 right pins output
     /* NowWriting = true;
     NowReading = false; */
-    std::cout << "Driver Manager > Writer Instance created!" << std::endl;
+    //std::cout << "Driver Manager > Writer Instance created!" << std::endl;
 
     if(isWriter) {
         std::cout << "Driver Manager > Writer Instance created!" << std::endl;
