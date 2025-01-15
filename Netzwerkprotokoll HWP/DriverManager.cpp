@@ -43,8 +43,8 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
 
     while (!ACK_Recieved) {
         drv.setRegister(&PORTA, FLAG);
-        drv.delay_ms(10);
-        drv.setRegister(&PORTA, 0x00);
+        /* drv.delay_ms(10);
+        drv.setRegister(&PORTA, 0x00); */
         std::cout << "DriverManager > Waiting for ACK..." << std::endl;
         if (ReadData() == ACK)
             ACK_Recieved = true;
