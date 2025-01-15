@@ -44,7 +44,7 @@ uint8_t DriverManager::ReadData() {
     uint8_t Bits_DRV = drv.getRegister(&PINA);
     drv.reverse(Bits_DRV);
     uint8_t inverted_Bits = Bits_DRV  & 0x0F; //IMPORTANT FOR MIRRORED DATA !!!
-    std::cout << "DriverManager > Recieved Data: " << inverted_Bits << std::endl;
+    std::cout << "DriverManager > Recieved Data: " << std::bitset<8>(inverted_Bits) << std::endl;
 
     return inverted_Bits; //invert bits so they are not mirrored
 }
