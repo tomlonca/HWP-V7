@@ -29,7 +29,7 @@ int Writer::CalculatePackagesAmount() {
     int MsgSize = msg.getMessageSize();
     int PckgSize = drvm.GetPackageSize();
     int counter = 0;
-    while (1) {
+    while (MsgSize > 0) {
         if (MsgSize == PckgSize || MsgSize < PckgSize){
             return counter++;
         }
