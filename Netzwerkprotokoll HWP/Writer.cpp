@@ -123,10 +123,14 @@ void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int 
         if (response == ACK) {
             ackReceived = true;
         } else if (response == NACK) {
+            std::cerr << "Writer > NACK recieved. Resending last package!" << std::endl;
+            std::cerr << "Writer > Resending CRC" << std::endl;
             drvm.SendFlag(CRC_F);
             drvm.SendData(crc);
+            std::cerr << "Writer > Resending package size" << std::endl;
             drvm.SendFlag(SIZE_F);
             drvm.SendData(static_cast<uint8_t>(packageSize));
+            std::cerr << "Writer > Ready to send data!" << std::endl;
             drvm.SendFlag(GS);
             for (size_t i = 0; i < packageData.size(); i++) {
                 drvm.SendData(packageData.at(i));
