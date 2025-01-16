@@ -23,19 +23,19 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
 
 void Reciever::StartCommunication() {
 
-    std::cout << "Reciever > Communication protocol started!" << std::endl;
+    std::cerr << "Reciever > Communication protocol started!" << std::endl;
 
     WaitforFlag(SYC);
 
-    std::cout << "Reciever > Synchronization done." << std::endl;
+    std::cerr << "Reciever > Synchronization done." << std::endl;
     
-    std::cout << "Reciever > Waiting for SOT signal..." << std::endl; 
+    std::cerr << "Reciever > Waiting for SOT signal..." << std::endl; 
     WaitforFlag(SOT);
-    std::cout << "Reciever > SOT signal recieved. Starting to read data." << std::endl;
+    std::cerr << "Reciever > SOT signal recieved. Starting to read data." << std::endl;
     
     GetData();
 
-    std::cout << "Reciever > Communication ended. " << std::endl;
+    std::cerr << "Reciever > Communication ended. " << std::endl;
 }
 
 
@@ -70,16 +70,16 @@ void Reciever::GetData() {
         dataStr.append(std::bitset<4>(LBits).to_string());
     }
 
-    std::cout << "Reciever > Package read. Calculating CRC..." << std::endl;
+    std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
 
     uint8_t CalculatedCRC = CalculateCRC8(dataStr);
 
     if (CalculatedCRC == R_CRC) {
         drvm.SendFlag(ACK); //send ACK that data was correctly sent
-        std::cout << "Reciever > RC check passed. Data received correctly." << std::endl;
+        std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         if (InputFile.is_open()) {
             InputFile << dataStr;
-            std::cout << "Reciever > Data stored in InputFile." << std::endl;
+            std::cerr << "Reciever > Data stored in InputFile." << std::endl;
         } else {
         std::cerr << "Reciever > Error: InputFile is not open." << std::endl;
     }
@@ -103,6 +103,6 @@ uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {
             CRC ^= polynomial; //Apply polynomial
         }
     }
-    std::cout << "Reciever > CRC Calculated: " << CRC << "(" << static_cast<int>(CRC) << ")" << std::endl;
+    std::cerr << "Reciever > CRC Calculated: " << CRC << "(" << static_cast<int>(CRC) << ")" << std::endl;
     return CRC;
 }

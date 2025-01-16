@@ -7,7 +7,7 @@ Writer::Writer(DriverManager &drvm, bool isWriter, Message &msg) : drvm(drvm), m
 
 void Writer::StartCommunication() {
     
-    std::cout << "Writer > Communication protocol started!" << std::endl;
+    std::cerr << "Writer > Communication protocol started!" << std::endl;
     drvm.SendFlag(SYC);
     
     //drvm.Synch(isWriter_W);
@@ -59,16 +59,16 @@ void Writer::SendMessage(bool &isFinished) {
     int PackagesAmount = CalculatePackagesAmount();
     std::vector<int> packageSizes = CalculatePackageSizes(PackagesAmount);
 
-    std::cout << "Writer > Packages Amount: " << PackagesAmount << std::endl;
+    std::cerr << "Writer > Packages Amount: " << PackagesAmount << std::endl;
 
     for (int i = 0; i < PackagesAmount; i++) {
-        std::cout << "Writer > Sending package Nr. " << i << std::endl;
+        std::cerr << "Writer > Sending package Nr. " << i << std::endl;
         std::vector<uint8_t> packageData = msg.getPackageData(i, packageSizes[i]);
 
-        std::cout << "Writer > Package size: " << packageData.size() << std::endl;
+        std::cerr << "Writer > Package size: " << packageData.size() << std::endl;
 
         uint8_t crc = CalculateCRC(packageData);
-        std::cout << "Writer > Calculated CRC for next package: " << static_cast<int>(crc) << std::endl;
+        std::cerr << "Writer > Calculated CRC for next package: " << static_cast<int>(crc) << std::endl;
 
         SendPackage(packageData, packageSizes[i], crc);
     }
