@@ -3,6 +3,7 @@
 
 Writer::Writer(DriverManager &drvm, bool isWriter, Message &msg) : drvm(drvm), msg(msg) { // Ändern Sie den Typ des ersten Parameters
     this->isWriter_W = isWriter;
+    drvm.SetToNull();
 }
 
 void Writer::StartCommunication() {
@@ -67,7 +68,7 @@ void Writer::SendMessage(bool &isFinished) {
     std::cerr << "Writer > Packages Amount: " << PackagesAmount << std::endl;
 
     for (int i = 0; i < PackagesAmount; i++) {
-        std::cerr << "Writer > Sending package Nr. " << i << std::endl;
+        std::cerr << "Writer > Sending package Nr. " << i+1 << std::endl;
         std::vector<uint8_t> packageData = msg.getPackageData(i, packageSizes[i]);
 
         std::cerr << "Writer > Package size: " << packageData.size() << std::endl;
@@ -130,7 +131,7 @@ void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int 
             drvm.SendFlag(SIZE_F);
             drvm.SendData(static_cast<uint8_t>(packageSize));
             std::cerr << "Writer > Ready to send data!" << std::endl;
-            drvm.SendFlag(DATA_F);
+            drvm.SendFlag(GS);
             for (size_t i = 0; i < packageData.size(); i++) {
                 drvm.SendData(packageData.at(i));
             }

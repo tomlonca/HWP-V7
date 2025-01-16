@@ -52,3 +52,7 @@ uint8_t DriverManager::ReadData() {
 int DriverManager::GetPackageSize() {
     return PackageSize;
 }
+
+void DriverManager::SetToNull() {
+    drv.setRegister(&PORTA, 0x00);
+}

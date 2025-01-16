@@ -24,6 +24,7 @@ class DriverManager {
         void SendFlag(const uint8_t FLAG); //return true when ACK is recieved. false when NACK is recieved
         uint8_t GetFlag();
         int GetPackageSize();
+        void SetToNull();
 };
 
 #endif

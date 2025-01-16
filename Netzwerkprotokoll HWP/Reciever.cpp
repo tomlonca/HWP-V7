@@ -7,6 +7,7 @@ Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) 
     if (!InputFile.is_open()) {
         std::cerr << "Reciever > Error opening InputFile " << std::endl;
     }
+    drvm.SetToNull();
 }
 
 void Reciever::WaitforFlag(const uint8_t &FLAG) {
@@ -19,6 +20,7 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
     }
 
     drvm.SendData(ACK); //acknowledge flag
+    //drvm.SetToNull();
 }
 
 void Reciever::StartCommunication() {
@@ -78,11 +80,12 @@ void Reciever::GetData() {
     }
 
     std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
+    drvm.SetToNull();
 
     uint8_t CalculatedCRC = CalculateCRC8(dataStr);
 
     if (CalculatedCRC == R_CRC) {
-        drvm.SendFlag(ACK); //send ACK that data was correctly sent
+        drvm.SendData(ACK); //send ACK that data was correctly sent
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         
         data.append(dataStr);
