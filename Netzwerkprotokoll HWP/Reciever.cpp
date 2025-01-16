@@ -82,17 +82,21 @@ void Reciever::GetData() {
     if (CalculatedCRC == R_CRC) {
         drvm.SendFlag(ACK); //send ACK that data was correctly sent
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
-        if (InputFile.is_open()) {
-            InputFile << dataStr;
-            std::cerr << "Reciever > Data stored in InputFile." << std::endl;
-        } else {
-        std::cerr << "Reciever > Error: InputFile is not open." << std::endl;
+        
+        data.append(dataStr);
+        std::cerr << "Reciever > Data stored in data variable." << std::endl;
+
+        if (drvm.ReadData() == EOT) {
+            std::cerr << "Reciever > EOT flag received. No more data to read." << std::endl;
+            return;
+        }
     }
-    } else {
+    else {
         drvm.SendFlag(NACK); //NACK requests message again
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
         GetData(); //activate read data
     }
+    std::cerr << "Reciever > Nothing else to receive. Terminating" << std::endl;
 }
 
 uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {

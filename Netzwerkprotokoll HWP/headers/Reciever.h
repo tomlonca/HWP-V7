@@ -15,6 +15,7 @@ class Reciever {
     private:
         DriverManager& drvm;
         std::ifstream InputFile;
+        std::string data;
         
     public:
         Reciever(DriverManager &drvm, std::string InputFileName);
