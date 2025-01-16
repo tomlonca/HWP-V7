@@ -36,6 +36,7 @@ void Reciever::StartCommunication() {
     GetData();
 
     std::cerr << "Reciever > Communication ended. " << std::endl;
+    std::cout << data << std::endl;
 }
 
 
