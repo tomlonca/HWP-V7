@@ -96,7 +96,7 @@ void Reciever::GetData() {
     }
     else {
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
-        drvm.SendFlag(NACK); //NACK requests message again
+        drvm.SendData(NACK); //NACK requests message again
         GetData(); //activate read data
     }
     std::cerr << "Reciever > Nothing else to receive. Terminating" << std::endl;

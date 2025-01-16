@@ -126,7 +126,7 @@ void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int 
             drvm.SendData(crc);
             drvm.SendFlag(SIZE_F);
             drvm.SendData(static_cast<uint8_t>(packageSize));
-            drvm.SendFlag(DATA_F);
+            drvm.SendFlag(GS);
             for (size_t i = 0; i < packageData.size(); i++) {
                 drvm.SendData(packageData.at(i));
             }
