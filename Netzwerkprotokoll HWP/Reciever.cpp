@@ -64,6 +64,7 @@ void Reciever::GetData() {
 
     uint8_t R_CRC = GetCRC();
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
+    WaitforFlag(GS);
     
     std::string dataStr;
     
@@ -93,8 +94,8 @@ void Reciever::GetData() {
         }
     }
     else {
-        drvm.SendFlag(NACK); //NACK requests message again
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
+        drvm.SendFlag(NACK); //NACK requests message again
         GetData(); //activate read data
     }
     std::cerr << "Reciever > Nothing else to receive. Terminating" << std::endl;
