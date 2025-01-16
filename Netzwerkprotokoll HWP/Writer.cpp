@@ -31,12 +31,12 @@ int Writer::CalculatePackagesAmount() {
     int PckgSize = drvm.GetPackageSize();
     int counter = 0;
     while (MsgSize > 0) {
-        if (MsgSize == PckgSize || MsgSize < PckgSize){
+        if (MsgSize <= PckgSize) {
             counter++;
-        }
-        else if (MsgSize > PckgSize) {
-            MsgSize = MsgSize - PckgSize;
-            counter ++;
+            MsgSize = 0;
+        } else {
+            MsgSize -= PckgSize;
+            counter++;
         }
     }
     std::cerr << "Writer > total packages: " << counter << std::endl;
