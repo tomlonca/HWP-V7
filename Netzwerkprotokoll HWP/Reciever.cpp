@@ -7,6 +7,7 @@ Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) 
     if (!InputFile.is_open()) {
         std::cerr << "Reciever > Error opening InputFile " << std::endl;
     }
+    drvm.SetToNull();
 }
 
 void Reciever::WaitforFlag(const uint8_t &FLAG) {

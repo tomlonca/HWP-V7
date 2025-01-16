@@ -3,6 +3,7 @@
 
 Writer::Writer(DriverManager &drvm, bool isWriter, Message &msg) : drvm(drvm), msg(msg) { // Ändern Sie den Typ des ersten Parameters
     this->isWriter_W = isWriter;
+    drvm.SetToNull();
 }
 
 void Writer::StartCommunication() {
