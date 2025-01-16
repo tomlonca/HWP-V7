@@ -40,18 +40,22 @@ void Reciever::StartCommunication() {
 
 
 uint8_t Reciever::GetCRC() {
+    std::cerr < "Reciever > Expecting CRC" << std::endl;
     WaitforFlag(CRC_F);
     uint8_t U_R_CRC = drvm.ReadData();
     uint8_t L_R_CRC = drvm.ReadData();
 
+    std::cerr < "Reciever > CRC recieved." << std::endl;
     return ((U_R_CRC << 4) | L_R_CRC); //combine both signals recieved
 }
 
 int Reciever::GetPackageSizeFromWriter() {
+    std::cerr < "Reciever > Expecting Package size" << std::endl;
     WaitforFlag(SIZE_F);
     uint8_t U_R_PCKG = drvm.ReadData();
     uint8_t L_R_PCKG = drvm.ReadData();
 
+    std::cerr < "Reciever > Package size recieved" << std::endl;
     return static_cast<int>(((U_R_PCKG << 4) | L_R_PCKG));
 }
 
@@ -61,7 +65,8 @@ void Reciever::GetData() {
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
     
     std::string dataStr;
-
+    
+    std::cerr < "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
@@ -91,6 +96,7 @@ void Reciever::GetData() {
 }
 
 uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {
+    std::cerr < "Reciever > Calculating own CRC" << std::endl;
     uint8_t polynomial = 0x07; //Standard polynomial for CRC-8 (e.g., x^8 + x^2 + x + 1 => 0x07)
     uint8_t CRC = 0x00; // Initial CRC value
 

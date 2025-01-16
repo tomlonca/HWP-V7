@@ -26,6 +26,7 @@ void Writer::StartCommunication() {
 }
 
 int Writer::CalculatePackagesAmount() {
+    std::cerr << "Writer > Calculating packages amount. " << std::endl;
     int MsgSize = msg.getMessageSize();
     int PckgSize = drvm.GetPackageSize();
     int counter = 0;
@@ -38,10 +39,12 @@ int Writer::CalculatePackagesAmount() {
             counter ++;
         }
     }
+    std::cerr << "Writer > total packages: " << counter << std::endl;
     return counter;
 }
 
 uint8_t CalculateCRC(std::vector<uint8_t> vector) {
+    std::cerr < "Writer > Calculating CRC" << std::endl;
     uint8_t crc = 0;
     for (size_t i = 0; i < vector.size(); ++i) {
         crc ^= vector[i];
@@ -53,6 +56,7 @@ uint8_t CalculateCRC(std::vector<uint8_t> vector) {
             }
         }
     }
+    std::cerr << "Writer > Calculated CRC: " << crc << std::endl;
     return crc;
 }
 
@@ -78,6 +82,7 @@ void Writer::SendMessage(bool &isFinished) {
 }
 
 std::vector<int> Writer::CalculatePackageSizes(int PackagesAmount) {
+    std::cerr << "Writer > Calculating package sizes" << std::endl;
     int remainingSize = msg.getMessageSize();
     int currentPackageSize = 0;
     std::vector<int> packageSizes;
@@ -91,6 +96,7 @@ std::vector<int> Writer::CalculatePackageSizes(int PackagesAmount) {
         packageSizes.push_back(currentPackageSize);
         remainingSize -= currentPackageSize;
     }
+    std::cerr << "Writer > Package sizes calculated successfully!" << std::endl;
 
     return packageSizes;
 }

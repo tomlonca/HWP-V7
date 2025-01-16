@@ -20,7 +20,7 @@ void DriverManager::SendData(uint8_t data) {
     LBits = data & 0x0F; //lower 4 bits
 
     drv.setRegister(&PORTA, UBits);
-    drv.delay_ms(5);  //useful? who knows idc
+    //drv.delay_ms(5);  //useful? who knows idc
     drv.setRegister(&PORTA, LBits);
 }
 
@@ -32,8 +32,10 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
     std::cerr << "DriverManager > Waiting for ACK..." << std::endl;
     while (!ACK_Recieved) {
         drv.setRegister(&PORTA, FLAG);
-        if (ReadData() == ACK)
+        if (ReadData() == ACK) {
             ACK_Recieved = true;
+            std::cerr << "DriverManager > ACK recieved!" << std::endl;
+        }
     }
 }
 
