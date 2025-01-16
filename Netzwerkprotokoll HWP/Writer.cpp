@@ -31,13 +31,14 @@ int Writer::CalculatePackagesAmount() {
     int counter = 0;
     while (MsgSize > 0) {
         if (MsgSize == PckgSize || MsgSize < PckgSize){
-            return counter++;
+            counter++;
         }
         else if (MsgSize > PckgSize) {
             MsgSize = MsgSize - PckgSize;
             counter ++;
         }
     }
+    return counter;
 }
 
 uint8_t CalculateCRC(std::vector<uint8_t> vector) {

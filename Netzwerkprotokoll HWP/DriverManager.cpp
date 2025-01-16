@@ -49,7 +49,6 @@ uint8_t DriverManager::ReadData() {
     return inverted_Bits; //invert bits so they are not mirrored
 }
 
-
 int DriverManager::GetPackageSize() {
     return PackageSize;
 }
