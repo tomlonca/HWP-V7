@@ -3,9 +3,10 @@
 #include "./headers/Flags.h"
 #include <fstream>
 
-Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm), InputFile(InputFileName, std::ios::binary) {
-    if (!InputFile) {
-        std::cerr << "Error opening file: " << InputFileName << std::endl;
+Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) {
+    InputFile.open(InputFileName, std::ios::binary);
+    if (!InputFile.is_open()) {
+        std::cerr << "Reciever > Error opening InputFile " << std::endl;
     }
 }
 
