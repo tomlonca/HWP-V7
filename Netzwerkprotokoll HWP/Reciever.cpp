@@ -19,7 +19,7 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
     }
 
     drvm.SendData(ACK); //acknowledge flag
-    drvm.SendData(0x00);
+    drvm.SetToNull();
 }
 
 void Reciever::StartCommunication() {
