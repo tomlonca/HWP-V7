@@ -29,11 +29,9 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
     bool ACK_Recieved = false;
     std::cerr << "DriverManager > Sending Flag (" << static_cast<int>(FLAG) << ")" << std::endl;
 
+    std::cerr << "DriverManager > Waiting for ACK..." << std::endl;
     while (!ACK_Recieved) {
         drv.setRegister(&PORTA, FLAG);
-        /* drv.delay_ms(10);
-        drv.setRegister(&PINA, 0x00); */
-        std::cerr << "DriverManager > Waiting for ACK..." << std::endl;
         if (ReadData() == ACK)
             ACK_Recieved = true;
     }
