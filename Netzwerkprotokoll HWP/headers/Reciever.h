@@ -14,7 +14,7 @@
 class Reciever {
     private:
         DriverManager& drvm;
-        std::fstream InputFile;
+        std::ifstream InputFile;
         
     public:
         Reciever(DriverManager &drvm, std::string InputFileName);
