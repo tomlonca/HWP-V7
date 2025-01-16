@@ -5,6 +5,7 @@
 #include "DriverManager.h"
 //#include "Message.h"
 
+#include <string.h>
 #include <fstream>
 #include <condition_variable>
 #include <b15f/b15f.h>

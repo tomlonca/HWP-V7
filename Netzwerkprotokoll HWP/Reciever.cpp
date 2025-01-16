@@ -1,7 +1,6 @@
 #include "./headers/Reciever.h"
 #include "./headers/DriverManager.h"
 #include "./headers/Flags.h"
-#include <fstream>
 
 Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) {
     InputFile.open(InputFileName, std::ios::binary);
