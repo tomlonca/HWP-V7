@@ -20,7 +20,7 @@ void DriverManager::SendData(uint8_t data) {
     LBits = data & 0x0F; //lower 4 bits
 
     drv.setRegister(&PORTA, UBits);
-    //drv.delay_ms(5);  //useful? who knows idc
+    drv.delay_ms(5);  //useful? who knows idc
     drv.setRegister(&PORTA, LBits);
 }
 
