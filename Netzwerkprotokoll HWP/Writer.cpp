@@ -76,7 +76,7 @@ void Writer::SendMessage(bool &isFinished) {
         uint8_t crc = CalculateCRC(packageData);
         std::cerr << "Writer > Calculated CRC for next package: " << static_cast<int>(crc) << std::endl;
 
-        SendPackage(packageData, packageSizes[i], crc);
+        SendPackage(packageData, packageSizes[i], crc, i);
     }
 
     isFinished = true;
@@ -102,7 +102,8 @@ std::vector<int> Writer::CalculatePackageSizes(int PackagesAmount) {
     return packageSizes;
 }
 
-void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc) {
+void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc, int i) {
+    
     drvm.SendFlag(CRC_F);
     drvm.SendData(crc);
 
@@ -115,10 +116,10 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
     }
 
     drvm.SetToNull();
-    HandleAcknowledgement(packageData, packageSize, crc);
+    HandleAcknowledgement(packageData, packageSize, crc, i);
 }
 
-void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc) {
+void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc, int i) {
     bool ackReceived = false;
 
     while (!ackReceived) {
@@ -127,6 +128,7 @@ void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int 
             ackReceived = true;
         } else if (response == NACK) {
             std::cerr << "Writer > NACK recieved. Resending last package!" << std::endl;
+            std::cerr << "Writer > Resending package Nr. " << i << std::endl;
             std::cerr << "Writer > Resending CRC" << std::endl;
             drvm.SendFlag(CRC_F);
             drvm.SendData(crc);

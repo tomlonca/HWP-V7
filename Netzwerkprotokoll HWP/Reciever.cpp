@@ -85,9 +85,7 @@ void Reciever::GetData(bool &isFinished) {
     drvm.SetToNull();
     std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
 
-    uint8_t CalculatedCRC = CalculateCRC8(dataStr);
-
-    if (CalculatedCRC == R_CRC) {
+    if (CalculateCRC8(dataStr) == R_CRC) {
         drvm.SendData(ACK); //send ACK that data was correctly sent
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         
