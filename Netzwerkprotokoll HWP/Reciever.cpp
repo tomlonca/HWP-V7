@@ -67,7 +67,7 @@ int Reciever::GetPackageSizeFromWriter() {
     return pckg_sz;
 }
 
-bool Reciever::GetData(bool isFinished) {
+void Reciever::GetData(bool &isFinished) {
     std::string dataStr;
     uint8_t R_CRC = GetCRC();
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
@@ -96,7 +96,8 @@ bool Reciever::GetData(bool isFinished) {
 
         if (drvm.ReadData() == EOT) {
             std::cerr << "Reciever > EOT flag received. No more data to read." << std::endl;
-            return isFinished = true;
+            isFinished = true;
+            return;
         }
 
     }
@@ -105,7 +106,6 @@ bool Reciever::GetData(bool isFinished) {
         drvm.SendData(NACK); //NACK requests message again
         GetData(); //activate read data
     }
-    return isFinished;
 }
 
 uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {

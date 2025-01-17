@@ -27,7 +27,7 @@ class Reciever {
         void WaitforFlag(const uint8_t &FLAG);
         uint8_t GetCRC();
         int GetPackageSizeFromWriter();
-        bool GetData(bool isFinished);
+        void GetData(bool &isFinished);
 };
 
 
