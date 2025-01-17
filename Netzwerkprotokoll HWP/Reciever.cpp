@@ -20,7 +20,7 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
     }
 
     drvm.SendData(ACK); //acknowledge flag
-    drvm.SetToNull();
+    //drvm.SetToNull();
 }
 
 void Reciever::StartCommunication() {
@@ -72,7 +72,7 @@ void Reciever::GetData(bool &isFinished) {
     uint8_t R_CRC = GetCRC();
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
     WaitforFlag(GS);
-    
+
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();

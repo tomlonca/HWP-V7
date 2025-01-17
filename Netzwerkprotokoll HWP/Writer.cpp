@@ -114,6 +114,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
         drvm.SendData(packageData.at(i));
     }
 
+    drvm.SetToNull();
     HandleAcknowledgement(packageData, packageSize, crc);
 }
 
