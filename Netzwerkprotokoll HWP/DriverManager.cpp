@@ -20,7 +20,6 @@ void DriverManager::SendData(uint8_t data) {
     LBits = data & 0x0F; //lower 4 bits
 
     drv.setRegister(&PORTA, UBits);
-    //drv.delay_ms(5);  //useful? who knows idc
     drv.setRegister(&PORTA, LBits);
 }
 
@@ -55,4 +54,8 @@ int DriverManager::GetPackageSize() {
 
 void DriverManager::SetToNull() {
     drv.setRegister(&PORTA, 0x00);
+}
+
+void DriverManager::Wait(uint16_t  ms) {
+    drv.delay_ms(ms);
 }
