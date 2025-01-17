@@ -35,7 +35,10 @@ void Reciever::StartCommunication() {
     WaitforFlag(SOT);
     std::cerr << "Reciever > SOT signal recieved. Starting to read data." << std::endl;
     
-    GetData();
+    bool isFinished = false;
+    while (!isFinished) {
+        GetData(isFinished);
+    }
 
     std::cerr << "Reciever > Communication ended. " << std::endl;
     std::cout << data << std::endl;
@@ -58,17 +61,17 @@ int Reciever::GetPackageSizeFromWriter() {
     uint8_t U_R_PCKG = drvm.ReadData();
     uint8_t L_R_PCKG = drvm.ReadData();
 
-    std::cerr << "Reciever > Package size recieved" << std::endl;
-    return static_cast<int>(((U_R_PCKG << 4) | L_R_PCKG));
+    int pckg_sz = static_cast<int>(((U_R_PCKG << 4) | L_R_PCKG));
+
+    std::cerr << "Reciever > Package size recieved: "<< pckg_sz  << std::endl;
+    return pckg_sz;
 }
 
-void Reciever::GetData() {
-
+bool Reciever::GetData(bool isFinished) {
+    std::string dataStr;
     uint8_t R_CRC = GetCRC();
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
     WaitforFlag(GS);
-    
-    std::string dataStr;
     
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
@@ -79,8 +82,8 @@ void Reciever::GetData() {
         dataStr.append(std::bitset<4>(LBits).to_string());
     }
 
-    std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
     drvm.SetToNull();
+    std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
 
     uint8_t CalculatedCRC = CalculateCRC8(dataStr);
 
@@ -93,15 +96,16 @@ void Reciever::GetData() {
 
         if (drvm.ReadData() == EOT) {
             std::cerr << "Reciever > EOT flag received. No more data to read." << std::endl;
-            return;
+            return isFinished = true;
         }
+
     }
     else {
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
         drvm.SendData(NACK); //NACK requests message again
         GetData(); //activate read data
     }
-    std::cerr << "Reciever > Nothing else to receive. Terminating" << std::endl;
+    return isFinished;
 }
 
 uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {

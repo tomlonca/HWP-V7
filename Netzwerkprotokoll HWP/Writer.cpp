@@ -105,10 +105,11 @@ std::vector<int> Writer::CalculatePackageSizes(int PackagesAmount) {
 void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc) {
     drvm.SendFlag(CRC_F);
     drvm.SendData(crc);
+
     drvm.SendFlag(SIZE_F);
     drvm.SendData(static_cast<uint8_t>(packageSize));
+    
     drvm.SendFlag(GS);
-
     for (size_t i = 0; i < packageData.size(); i++) {
         drvm.SendData(packageData.at(i));
     }
