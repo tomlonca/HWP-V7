@@ -61,7 +61,7 @@ int Reciever::GetPackageSizeFromWriter() {
     uint8_t U_R_PCKG = drvm.ReadData();
     uint8_t L_R_PCKG = drvm.ReadData();
 
-    int pckg_sz = static_cast<int>(((U_R_PCKG << 4) | L_R_PCKG));
+    int pckg_sz = (U_R_PCKG << 4) | L_R_PCKG;
 
     std::cerr << "Reciever > Package size recieved: "<< pckg_sz  << std::endl;
     return pckg_sz;
