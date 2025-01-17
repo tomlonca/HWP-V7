@@ -125,6 +125,7 @@ void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int 
     while (!ackReceived) {
         uint8_t response = drvm.ReadData();
         if (response == ACK) {
+            std::cerr << "Writer > Package recieved correctly. continue..." << std::endl;
             ackReceived = true;
         } else if (response == NACK) {
             std::cerr << "Writer > NACK recieved. Resending last package!" << std::endl;
