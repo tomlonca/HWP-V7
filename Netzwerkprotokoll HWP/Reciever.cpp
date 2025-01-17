@@ -21,7 +21,7 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
 
     drvm.SendData(ACK); //acknowledge flag
     drvm.Wait(2);
-    drv.setRegister(&PORTA, 0x00);
+    drvm.SendData(0x00);
 }
 
 void Reciever::StartCommunication() {
@@ -89,7 +89,7 @@ void Reciever::GetData(bool &isFinished) {
     if (CalculateCRC8(dataStr) == R_CRC) {
         drvm.SendData(ACK); //send ACK that data was correctly sent
         drvm.Wait(2);
-        drv.setRegister(&PORTA, 0x00);
+        drvm.SendData(0x00);
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         
         data.append(dataStr);
@@ -105,7 +105,7 @@ void Reciever::GetData(bool &isFinished) {
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
         drvm.SendData(NACK); //NACK requests message again
         drvm.Wait(2);
-        drv.setRegister(&PORTA, 0x00);
+        drvm.SendData(0x00);
         GetData(isFinished); //activate read data
     }
 }
