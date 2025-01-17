@@ -99,12 +99,11 @@ void Reciever::GetData(bool &isFinished) {
             isFinished = true;
             return;
         }
-
     }
     else {
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
         drvm.SendData(NACK); //NACK requests message again
-        GetData(); //activate read data
+        GetData(isFinished); //activate read data
     }
 }
 
