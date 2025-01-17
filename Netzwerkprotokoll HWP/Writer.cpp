@@ -119,6 +119,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
 
 void Writer::HandleAcknowledgement(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc) {
     bool ackReceived = false;
+
     while (!ackReceived) {
         uint8_t response = drvm.ReadData();
         if (response == ACK) {
