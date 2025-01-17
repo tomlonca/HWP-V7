@@ -25,7 +25,7 @@ class Writer {
         void SendMessage(bool &isFinished);
         std::vector<int> CalculatePackageSizes(int PackagesAmount);
         void SendPackage(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc, int i);
-        void HandleAcknowledgement(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc);
+        void HandleAcknowledgement(const std::vector<uint8_t>& packageData, int packageSize, uint8_t crc, int i);
 };
 
 #endif
