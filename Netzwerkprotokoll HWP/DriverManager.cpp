@@ -24,7 +24,7 @@ void DriverManager::SendData(uint8_t data) {
 }
 
 void DriverManager::SendFlag(const uint8_t FLAG) {
-    drvm.SetToNull();
+    SetToNull();
     
     bool ACK_Recieved = false;
     std::cerr << "DriverManager > Sending Flag (" << static_cast<int>(FLAG) << ")" << std::endl;
