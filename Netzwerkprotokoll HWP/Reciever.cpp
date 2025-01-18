@@ -123,6 +123,6 @@ uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {
             CRC ^= polynomial; //Apply polynomial
         }
     }
-    std::cerr << "Reciever > CRC Calculated: " << CRC << "(" << static_cast<int>(CRC) << ")" << std::endl;
+    std::cerr << "Reciever > CRC Calculated: " << std::bitset<8>(CRC) << "(" << static_cast<int>(CRC) << ")" << std::endl;
     return CRC;
 }

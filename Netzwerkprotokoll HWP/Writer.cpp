@@ -11,8 +11,6 @@ void Writer::StartCommunication() {
     std::cerr << "Writer > Communication protocol started!" << std::endl;
     drvm.SendFlag(SYC);
     
-    //drvm.Synch(isWriter_W);
-    
     if (msg.getMessageSize() == 0) {
         std::cerr << "Writer > There is nothing to send!" << std::endl;
         return;
@@ -57,7 +55,7 @@ uint8_t CalculateCRC(std::vector<uint8_t> vector) {
             }
         }
     }
-    std::cerr << "Writer > Calculated CRC: " << crc << std::endl;
+    std::cerr << "Writer > Calculated CRC: " << std::bitset<8>(crc) << std::endl;
     return crc;
 }
 
