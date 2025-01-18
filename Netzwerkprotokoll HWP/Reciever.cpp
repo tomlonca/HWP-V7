@@ -11,6 +11,7 @@ Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) 
 }
 
 void Reciever::WaitforFlag(const uint8_t &FLAG) {
+    drvm.SetToNull();
     std::cerr << "Reciever > Waiting for Flag " << static_cast<int>(FLAG) << std::endl;
     bool FlagRecieved = false;
 
@@ -87,7 +88,7 @@ void Reciever::GetData(bool &isFinished) {
     if (CalculateCRC8(dataStr) == R_CRC) {
         drvm.SendData(ACK); //send ACK that data was correctly sent
         drvm.Wait(2);
-        drvm.SendData(0x00);
+        drvm.SetToNull();
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         
         data.append(dataStr);
@@ -103,7 +104,7 @@ void Reciever::GetData(bool &isFinished) {
         std::cerr << "Reciever > CRC check failed. Data corrupted. Requesting again" << std::endl;
         drvm.SendData(NACK); //NACK requests message again
         drvm.Wait(2);
-        drvm.SendData(0x00);
+        drvm.SetToNull();
         GetData(isFinished); //activate read data
     }
 }
