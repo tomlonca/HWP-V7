@@ -73,6 +73,7 @@ void Reciever::GetData(bool &isFinished) {
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
     WaitforFlag(GS);
 
+    drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();
