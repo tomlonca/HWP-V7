@@ -34,7 +34,7 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
         drv.setRegister(&PORTA, FLAG);
         if (ReadData() == ACK) {
             ACK_Recieved = true;
-            drvm.Wait(5);
+            Wait(5);
             std::cerr << "DriverManager > ACK recieved!" << std::endl;
         }
     }
