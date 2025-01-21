@@ -34,6 +34,7 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
         drv.setRegister(&PORTA, FLAG);
         if (ReadData() == ACK) {
             ACK_Recieved = true;
+            drvm.Wait(5);
             std::cerr << "DriverManager > ACK recieved!" << std::endl;
         }
     }
@@ -44,7 +45,7 @@ uint8_t DriverManager::ReadData() {
     uint8_t Bits_DRV = drv.getRegister(&PINA);
     drv.reverse(Bits_DRV);
     uint8_t inverted_Bits = Bits_DRV  & 0x0F; //IMPORTANT FOR MIRRORED DATA !!!
-    std::cerr << "DriverManager > Recieved Data: " << std::bitset<8>(inverted_Bits) << std::endl;
+    std::cerr << std::bitset<8>(inverted_Bits);
 
     return inverted_Bits; //invert bits so they are not mirrored
 }
