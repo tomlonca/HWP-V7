@@ -11,7 +11,6 @@ Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) 
 }
 
 void Reciever::WaitforFlag(const uint8_t &FLAG) {
-    //drvm.SetToNull();
     std::cerr << "Reciever > Waiting for Flag... " << static_cast<int>(FLAG) << std::endl;
     bool FlagRecieved = false;
 
@@ -21,6 +20,7 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
     }
     drvm.SendData(ACK); //acknowledge flag
     drvm.SetToNull();
+    drvm.Wait(3);
 }
 
 void Reciever::StartCommunication() {
