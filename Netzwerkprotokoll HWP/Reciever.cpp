@@ -72,7 +72,7 @@ int Reciever::GetPackageSizeFromWriter() {
     uint8_t U_R_PCKG = drvm.ReadData();
     uint8_t L_R_PCKG = drvm.ReadData();
 
-    int pckg_sz = ((U_R_PCKG << 4) | L_R_PCKG);
+    int pckg_sz = ((U_R_PCKG << 4) | L_R_PCKG) +1 ;
 
     std::cerr << std::endl << "Reciever > Package size recieved: "<< pckg_sz  << std::endl;
     return pckg_sz;
@@ -86,7 +86,7 @@ void Reciever::GetData(bool &isFinished) {
 
     drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
-    for (int i = 1; i < PackageSize; i++) {
+    for (int i = 0; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
         std::cerr << " ";
