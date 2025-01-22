@@ -105,6 +105,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
     for (size_t i = 0; i < packageData.size(); i++) {
         drvm.SendData(packageData.at(i));
     }
+    std::cerr << std::endl << "Writer > Done sending" << std::endl;
 
     drvm.SetToNull();
     HandleAcknowledgement(packageData, packageSize, crc, i);
