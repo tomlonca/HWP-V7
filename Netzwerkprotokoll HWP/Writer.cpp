@@ -72,7 +72,7 @@ void Writer::SendMessage(bool &isFinished) {
         std::cerr << "Writer > Package size: " << packageData.size() << std::endl;
 
         uint8_t crc = CalculateCRC(packageData);
-        std::cerr << "Writer > Calculated CRC for next package: " << std::bitset<8>(crc) << std::endl;
+        //std::cerr << "Writer > Calculated CRC for next package: " << std::bitset<8>(crc) << std::endl;
 
         SendPackage(packageData, packageSizes[i], crc, i);
     }
