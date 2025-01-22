@@ -18,6 +18,7 @@ void Reciever::WaitforFlag(const uint8_t &FLAG) {
     while (!FlagRecieved) {
         if (drvm.ReadData() == FLAG) {
             FlagRecieved = true;
+            std::cerr << std::endl;
         } else {
             auto now = std::chrono::steady_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start).count();
@@ -73,7 +74,7 @@ int Reciever::GetPackageSizeFromWriter() {
 
     int pckg_sz = ((U_R_PCKG << 4) | L_R_PCKG) +1 ;
 
-    std::cerr << "Reciever > Package size recieved: "<< pckg_sz  << std::endl;
+    std::cerr << std::endl << "Reciever > Package size recieved: "<< pckg_sz  << std::endl;
     return pckg_sz;
 }
 
@@ -88,6 +89,7 @@ void Reciever::GetData(bool &isFinished) {
     for (int i = 0; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
+        std::cerr << " ";
 
         receivedData.push_back((UBits << 4) | LBits); // Combine UBits and LBits
     }
@@ -107,7 +109,7 @@ void Reciever::GetData(bool &isFinished) {
         std::cerr << "Reciever > Data stored in data variable." << std::endl;
 
         if (drvm.ReadData() == EOT) {
-            std::cerr << "Reciever > EOT flag received. No more data to read." << std::endl;
+            std::cerr << std::endl <<"Reciever > EOT flag received. No more data to read." << std::endl;
             isFinished = true;
             return;
         }
