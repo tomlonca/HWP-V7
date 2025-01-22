@@ -86,7 +86,7 @@ void Reciever::GetData(bool &isFinished) {
 
     drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
-    drvm.Wait(2);  //RUMTESTEN
+    //drvm.Wait(2);  //RUMTESTEN
     for (int i = 1; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
