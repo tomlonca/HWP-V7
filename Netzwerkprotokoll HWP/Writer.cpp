@@ -112,6 +112,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
     drvm.Wait(3);
     for (size_t i = 0; i < packageData.size(); i++) {
         drvm.SendData(packageData.at(i));
+        drvm.Wait(20);  //DEBUGGEN
     }
 
     drvm.SetToNull();
