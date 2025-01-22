@@ -78,7 +78,7 @@ int Reciever::GetPackageSizeFromWriter() {
 }
 
 void Reciever::GetData(bool &isFinished) {
-    std::string dataStr;
+    std::vector<uint8_t> receivedData;
     uint8_t R_CRC = GetCRC();
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
     WaitforFlag(GS);
@@ -89,15 +89,14 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
 
-        dataStr.append(std::bitset<4>(UBits).to_string());
-        dataStr.append(std::bitset<4>(LBits).to_string());
+        receivedData.push_back((UBits << 4) | LBits); // Combine UBits and LBits
     }
     std::cerr << std::endl;
 
     drvm.SetToNull();
     std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
 
-    if (CalculateCRC8(dataStr) == R_CRC) {
+    if (CalculateCRC8(receivedData) == R_CRC) {
         drvm.SendData(ACK); //send ACK that data was correctly sent
         drvm.Wait(2);
         drvm.SetToNull();
@@ -121,20 +120,19 @@ void Reciever::GetData(bool &isFinished) {
     }
 }
 
-uint8_t Reciever::CalculateCRC8(const std::string &binaryStr) {
-    std::cerr << "Reciever > Calculating own CRC" << std::endl;
-    uint8_t polynomial = 0x07; //Standard polynomial for CRC-8 (e.g., x^8 + x^2 + x + 1 => 0x07)
-    uint8_t CRC = 0x00; // Initial CRC value
+uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
+    uint8_t polynomial = 0x07; // CRC-8 Polynomial
+    uint8_t crc = 0x00; // Initial CRC value
 
-    for (size_t i = 0; i < binaryStr.length(); ++i) {
-        bool inputBit = (binaryStr[i] == '1'); // Convert '1'/'0' to boolean
-        CRC = (CRC << 1) | inputBit; //Shift CRC to the left and add the input bit
-    
-        //If the most significant bit is 1, apply the polynomial
-        if ((CRC & 0x80) != 0) {
-            CRC ^= polynomial; //Apply polynomial
+    for (uint8_t byte : data) {
+        crc ^= byte; // XOR each byte with the CRC
+        for (uint8_t i = 0; i < 8; ++i) {
+            if (crc & 0x80) { // MSB is 1
+                crc = (crc << 1) ^ polynomial; // Shift and apply polynomial
+            } else {
+                crc <<= 1; // Just shift
+            }
         }
     }
-    std::cerr << "Reciever > CRC Calculated: " << std::bitset<8>(CRC) << "(" << static_cast<int>(CRC) << ")" << std::endl;
-    return CRC;
+    return crc;
 }
