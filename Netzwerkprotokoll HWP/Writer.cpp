@@ -109,6 +109,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
     drvm.SendData(static_cast<uint8_t>(packageSize));
     
     drvm.SendFlag(GS);
+    drvm.Wait(3);
     for (size_t i = 0; i < packageData.size(); i++) {
         drvm.SendData(packageData.at(i));
     }
