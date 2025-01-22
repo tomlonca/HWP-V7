@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
 
     //Create DriverManager
     B15F &drv = B15F::getInstance();
+    drv.setRegister(&PORTA, 0x00);
     DriverManager drvm = DriverManager(drv, isWriter);
     std::string filename = "InputFile.txt";
     if (isWriter) {
