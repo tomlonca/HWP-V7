@@ -137,5 +137,6 @@ uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
             }
         }
     }
+    std::cerr << "Reciever > Calculated CRC: " << std::bitset<8>(crc) << std::endl;
     return crc;
 }
