@@ -28,7 +28,7 @@ void DriverManager::SendFlag(const uint8_t FLAG) {
     SetToNull();
     
     bool ACK_Recieved = false;
-    std::cerr << "DriverManager > Sending Flag (" << static_cast<int>(FLAG) << ")" << std::endl;
+    std::cerr << "DriverManager > Sending Flag (" << std::bitset<8>(FLAG) << ")" << std::endl;
 
     std::cerr << "DriverManager > Waiting for ACK..." << std::endl;
     while (!ACK_Recieved) {

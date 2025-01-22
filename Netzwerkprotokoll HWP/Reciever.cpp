@@ -11,7 +11,7 @@ Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) 
 }
 
 void Reciever::WaitforFlag(const uint8_t &FLAG) {
-    std::cerr << "Reciever > Waiting for Flag... " << static_cast<int>(FLAG) << std::endl;
+    std::cerr << "Reciever > Waiting for Flag... " << std::bitset<8>(FLAG) << std::endl;
     bool FlagRecieved = false;
     auto start = std::chrono::steady_clock::now();
 
