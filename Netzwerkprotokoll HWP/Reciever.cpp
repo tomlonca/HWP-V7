@@ -102,6 +102,7 @@ void Reciever::GetData(bool &isFinished) {
         drvm.SetToNull();
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         
+        std::string dataStr(receivedData.begin(), receivedData.end());
         data.append(dataStr);
         std::cerr << "Reciever > Data stored in data variable." << std::endl;
 
