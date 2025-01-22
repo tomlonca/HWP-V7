@@ -20,8 +20,8 @@ void DriverManager::SendData(uint8_t data) {
     UBits = (data >> 4) & 0x0F; //upper 4 bits
     LBits = data & 0x0F; //lower 4 bits
 
-    drv.setRegister(&PORTA, UBits);
     drv.setRegister(&PORTA, LBits);
+    drv.setRegister(&PORTA, UBits);
 }
 
 void DriverManager::SendFlag(const uint8_t FLAG) {
