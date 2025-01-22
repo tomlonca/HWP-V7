@@ -82,6 +82,7 @@ void Reciever::GetData(bool &isFinished) {
         dataStr.append(std::bitset<4>(UBits).to_string());
         dataStr.append(std::bitset<4>(LBits).to_string());
     }
+    std::cerr << std::endl;
 
     drvm.SetToNull();
     std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
