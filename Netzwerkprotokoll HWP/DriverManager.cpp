@@ -16,9 +16,10 @@ DriverManager::DriverManager(B15F &drv, bool isWriter) : drv(drv) {
 void DriverManager::SendData(uint8_t data) {
 
     uint8_t LBits, UBits;
-    std::cerr << std::bitset<8>(data) << "  ";
     UBits = (data >> 4) & 0x0F; //upper 4 bits
     LBits = data & 0x0F; //lower 4 bits
+
+    std::cerr << "DriverManager > " << std::bitset<4>(UBits) << " " << std::bitset<4>(LBits) << std::endl;
 
     drv.setRegister(&PORTA, UBits);
     drv.setRegister(&PORTA, LBits);
