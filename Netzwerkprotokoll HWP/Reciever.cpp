@@ -91,7 +91,8 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
         std::cerr << " ";
-
+        std::cerr << std::bitset<8>((UBits << 4) | LBits) << std::endl;
+        
         receivedData.push_back((UBits << 4) | LBits); // Combine UBits and LBits
     }
     std::cerr << std::endl;

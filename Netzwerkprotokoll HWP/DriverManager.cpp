@@ -19,7 +19,7 @@ void DriverManager::SendData(uint8_t data) {
     UBits = (data >> 4) & 0x0F; //upper 4 bits
     LBits = data & 0x0F; //lower 4 bits
 
-    std::cerr << "DriverManager > data: "<< std::bitset<8>(data) << "UBits: " << std::bitset<4>(UBits) << ", LBits:  " << std::bitset<4>(LBits) << std::endl;
+    std::cerr << std::bitset<4>(UBits) << " " << std::bitset<4>(LBits);
 
     drv.setRegister(&PORTA, UBits);
     drv.setRegister(&PORTA, LBits);
