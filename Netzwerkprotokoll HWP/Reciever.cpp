@@ -58,8 +58,8 @@ void Reciever::StartCommunication() {
 uint8_t Reciever::GetCRC() {
     std::cerr << "Reciever > Expecting CRC" << std::endl;
     WaitforFlag(CRC_F);
-    uint8_t L_R_CRC = drvm.ReadData();
     uint8_t U_R_CRC = drvm.ReadData();
+    uint8_t L_R_CRC = drvm.ReadData();
 
     std::cerr << "Reciever > CRC recieved." << std::endl;
     return ((U_R_CRC << 4) | L_R_CRC); //combine both signals recieved
@@ -68,8 +68,8 @@ uint8_t Reciever::GetCRC() {
 int Reciever::GetPackageSizeFromWriter() {
     std::cerr << "Reciever > Expecting Package size" << std::endl;
     WaitforFlag(SIZE_F);
-    uint8_t U_R_PCKG = drvm.ReadData();
     uint8_t L_R_PCKG = drvm.ReadData();
+    uint8_t U_R_PCKG = drvm.ReadData();
 
     int pckg_sz = ((U_R_PCKG << 4) | L_R_PCKG) +1 ;
 
@@ -86,8 +86,8 @@ void Reciever::GetData(bool &isFinished) {
     drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
-        uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
+        uint8_t UBits = drvm.ReadData();
 
         dataStr.append(std::bitset<4>(UBits).to_string());
         dataStr.append(std::bitset<4>(LBits).to_string());
