@@ -58,8 +58,8 @@ void Reciever::StartCommunication() {
 uint8_t Reciever::GetCRC() {
     std::cerr << "Reciever > Expecting CRC" << std::endl;
     WaitforFlag(CRC_F);
-    uint8_t U_R_CRC = drvm.ReadData();
     uint8_t L_R_CRC = drvm.ReadData();
+    uint8_t U_R_CRC = drvm.ReadData();
 
     std::cerr << "Reciever > CRC recieved." << std::endl;
     return ((U_R_CRC << 4) | L_R_CRC); //combine both signals recieved
