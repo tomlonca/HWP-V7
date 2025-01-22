@@ -13,12 +13,22 @@ Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) 
 void Reciever::WaitforFlag(const uint8_t &FLAG) {
     std::cerr << "Reciever > Waiting for Flag... " << static_cast<int>(FLAG) << std::endl;
     bool FlagRecieved = false;
+    auto start = std::chrono::steady_clock::now();
 
     while (!FlagRecieved) {
-        if (drvm.ReadData() == FLAG)
+        if (drvm.ReadData() == FLAG) {
             FlagRecieved = true;
+        } else {
+            auto now = std::chrono::steady_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - start).count();
+            if (elapsed > 2) {
+                std::cerr << "Reciever > Resending ACK flag after 2 seconds of waiting." << std::endl;
+                drvm.SendData(ACK);
+                start = std::chrono::steady_clock::now(); // Reset the timer
+            }
+        }
     }
-    drvm.SendData(ACK); //acknowledge flag
+    drvm.SendData(ACK); // acknowledge flag
     drvm.Wait(3);
     drvm.SetToNull();
 }
