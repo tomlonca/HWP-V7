@@ -128,7 +128,23 @@ void Reciever::GetData(bool &isFinished) {
     }
 }
 
-uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
+uint8_t Reciever::CalculateCRC8(std::vector<uint8_t> vector) {
+    uint8_t crc = 0;
+    for (size_t i = 0; i < vector.size(); ++i) {
+        crc ^= vector[i];
+        for (uint8_t j = 0; j < 8; ++j) {
+            if (crc & 0x80) {
+                crc = (crc << 1) ^ 0x07;
+            } else {
+                crc <<= 1;
+            }
+        }
+    }
+    std::cerr << "Reciever > Calculated CRC: " << std::bitset<8>(crc) << std::endl;
+    return crc;
+}
+
+/* uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
     uint8_t polynomial = 0x07; // CRC-8 Polynomial
     uint8_t crc = 0x00; // Initial CRC value
 
@@ -144,7 +160,7 @@ uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
     }
     std::cerr << "Reciever > Calculated CRC: " << std::bitset<8>(crc) << std::endl;
     return crc;
-}
+} */
 
 void Reciever::ReverseBits(uint8_t &value) {
     uint8_t original = value;

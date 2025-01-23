@@ -41,7 +41,7 @@ int Writer::CalculatePackagesAmount() {
     return counter;
 }
 
-uint8_t CalculateCRC(std::vector<uint8_t> vector) {
+uint8_t Writer::CalculateCRC(std::vector<uint8_t> vector) {
     uint8_t crc = 0;
     for (size_t i = 0; i < vector.size(); ++i) {
         crc ^= vector[i];
