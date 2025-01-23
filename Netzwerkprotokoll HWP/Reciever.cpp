@@ -128,7 +128,7 @@ void Reciever::GetData(bool &isFinished) {
     }
 }
 
-uint8_t Reciever::CalculateCRC8(std::vector<uint8_t> vector) {
+uint8_t Reciever::CalculateCRC8(std::vector<uint8_t> &vector) {
     uint8_t crc = 0;
     for (size_t i = 0; i < vector.size(); ++i) {
         crc ^= vector[i];
