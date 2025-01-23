@@ -12,7 +12,7 @@ class DriverManager {
         B15F& drv;
         bool NowWriting;
         bool NowReading;
-        int PackageSize = 32;
+        int PackageSize = 20;
         std::mutex mutex;
         std::condition_variable cv;
 
