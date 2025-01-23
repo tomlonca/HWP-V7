@@ -92,9 +92,9 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
         std::cerr << " ";
-        drvm.Invert(LBits);
+        drvm.Invert(UBits);
 
-        uint8_t comb = (UBits << 4) | (LBits >> 4);
+        uint8_t comb = (LBits << 4) | (UBits >> 4);
         std::cerr << std::bitset<8>(comb) << std::endl;
         
         receivedData.push_back(comb); // Combine UBits and LBits
