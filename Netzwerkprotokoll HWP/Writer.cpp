@@ -103,7 +103,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
     drvm.Wait(3);
     for (int i = 1; i < 4; i++) {
         std::cerr << "Writer > Sending package repetition " << i << "/3" << std::endl;
-        SendFlag(RS);
+        drvm.SendFlag(RS);
         for (size_t i = 0; i < packageData.size(); i++) {
             std::cerr << std::bitset<8>(packageData.at(i)) << std::endl; 
             drvm.SendData(packageData.at(i));
