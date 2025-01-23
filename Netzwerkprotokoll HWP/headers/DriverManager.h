@@ -26,6 +26,7 @@ class DriverManager {
         int GetPackageSize();
         void SetToNull();
         void Wait(uint16_t ms);
+        void SendMessageData(uint8_t data);
 };
 
 #endif
