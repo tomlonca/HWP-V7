@@ -88,13 +88,10 @@ void Reciever::GetData(bool &isFinished) {
     drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
-        //drvm.Wait(1);
+        drvm.Wait(3);
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
-        /* std::cerr << "Upper: " << std::bitset<8>(UBits) << " , Lower: " << std::bitset<8>(LBits) << std::endl; */
         ReverseBits(LBits);
-        /* std::cerr << "Lower inverted: " << std::bitset<8>(LBits) << std::endl;
-        std::cerr << "Shifted Lower: " << std::bitset<8>(LBits >> 4) << std::endl; */
         uint8_t comb = LBits | UBits;
         std::cerr << std::bitset<8>(comb) << std::endl;
         receivedData.push_back(comb); // Combine UBits and LBits
