@@ -149,6 +149,6 @@ uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
     return crc;
 }
 
-void Reciever::Invert(uint8_t *value) {
+void Reciever::Invert(uint8_t &value) {
     *value = ~(*value);
 }
