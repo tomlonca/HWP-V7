@@ -142,6 +142,7 @@ uint8_t Reciever::CalculateCRC8(std::vector<uint8_t> &vector) {
 
 std::vector<uint8_t> Reciever::GetRepetition(int &PackageSize) {
     WaitforFlag(RS);
+    std::vector<uint8_t> receivedData;
 
     for (int i = 0; i < PackageSize; i++) {
 
