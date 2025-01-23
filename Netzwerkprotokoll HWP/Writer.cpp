@@ -41,7 +41,7 @@ int Writer::CalculatePackagesAmount() {
     return counter;
 }
 
-uint8_t CalculateCRC(std::vector<uint8_t> vector) {
+uint8_t Writer::CalculateCRC(std::vector<uint8_t> vector) {
     uint8_t crc = 0;
     for (size_t i = 0; i < vector.size(); ++i) {
         crc ^= vector[i];
@@ -103,7 +103,7 @@ void Writer::SendPackage(const std::vector<uint8_t>& packageData, int packageSiz
     drvm.SendFlag(GS);
     drvm.Wait(3);
     for (size_t i = 0; i < packageData.size(); i++) {
-        std::cerr << std::endl <<  "Writer > Sending " << std::bitset<8>(packageData.at(i)) << std::endl; 
+        std::cerr << std::bitset<8>(packageData.at(i)) << std::endl; 
         drvm.SendData(packageData.at(i));
     }
     std::cerr << std::endl << "Writer > Done sending" << std::endl;
