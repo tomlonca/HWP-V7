@@ -150,7 +150,7 @@ uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
     return crc;
 }
 
-void ReverseBits(uint8_t &value) {
+void Reciever::ReverseBits(uint8_t &value) {
     uint8_t original = value;
     uint8_t reversed = 0;
 
