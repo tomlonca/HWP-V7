@@ -149,8 +149,7 @@ std::vector<uint8_t> Reciever::GetRepetition(int &PackageSize) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
 
-        std::cerr << "Reciever > " << std::bitset<8>(UBits) << " " << std::bitset<8>(LBits) << std::endl;
-        
+        //std::cerr << "Reciever > " << std::bitset<8>(UBits) << " " << std::bitset<8>(LBits) << std::endl;
         //ReverseBits(LBits);
 
         uint8_t comb = (UBits << 4)| LBits;
