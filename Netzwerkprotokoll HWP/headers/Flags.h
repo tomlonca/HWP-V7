@@ -16,5 +16,6 @@ const uint8_t ACK = 0x06; //acknowlodgement (0b00000110) (6)
 const uint8_t NACK = 0x0A; //negative acknowlodgement  (0b00001010) (10)
 
 const uint8_t GS = 0x0C; //group separation (0b00001100) (12)
+const uint8_t RS = 0x0E; //record separator (0b00001110) (14)
 
 #endif // FLAGS_H

@@ -79,38 +79,33 @@ int Reciever::GetPackageSizeFromWriter() {
 }
 
 void Reciever::GetData(bool &isFinished) {
-    std::vector<uint8_t> receivedData;
     uint8_t R_CRC = GetCRC();
     std::cerr << "Reciever > Received CRC from Writer: " << std::bitset<8>(R_CRC) << std::endl;
+    
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
-    WaitforFlag(GS);
-
     drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
-    for (int i = 0; i < PackageSize; i++) {
+    
+    std::cerr << "Reciever > Expecting version 1" << std::endl;
+    std::vector<uint8_t> Version1 = GetRepetition(PackageSize);
+    std::cerr << "Reciever > Version 1 recieved, continue with version 2" << std::endl;
+    std::vector<uint8_t> Version2 = GetRepetition(PackageSize);
+    std::cerr << "Reciever > Version 2 recieved, continue with version 3" << std::endl;
+    std::vector<uint8_t> Version3 = GetRepetition(PackageSize);
+    std::cerr << "Reciever > Version 3 recieved" << std::endl;
 
-        uint8_t UBits = drvm.ReadData();
-        uint8_t LBits = drvm.ReadData();
-        
-        ReverseBits(LBits);
-
-        uint8_t comb = LBits | UBits;
-        std::cerr << std::bitset<8>(comb) << std::endl;
-        receivedData.push_back(comb); // Combine UBits and LBits
-    }
-
-    std::cerr << std::endl;
+    std::vector<uint8_t> FinalVersion = CompareReps(Version1, Version2, Version3);
 
     drvm.SetToNull();
     std::cerr << "Reciever > Package read. Calculating CRC..." << std::endl;
 
-    if (CalculateCRC8(receivedData) == R_CRC) {
+    if (CalculateCRC8(FinalVersion) == R_CRC) {
         drvm.SendData(ACK); //send ACK that data was correctly sent
         drvm.Wait(2);
         drvm.SetToNull();
         std::cerr << "Reciever > RC check passed. Data received correctly." << std::endl;
         
-        std::string dataStr(receivedData.begin(), receivedData.end());
+        std::string dataStr(FinalVersion.begin(), FinalVersion.end());
         data.append(dataStr);
         std::cerr << "Reciever > Data stored in data variable." << std::endl;
 
@@ -145,23 +140,54 @@ uint8_t Reciever::CalculateCRC8(std::vector<uint8_t> &vector) {
     return crc;
 }
 
-/* uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
-    uint8_t polynomial = 0x07; // CRC-8 Polynomial
-    uint8_t crc = 0x00; // Initial CRC value
+std::vector<uint8_t> Reciever::GetRepetition(int &PackageSize) {
+    WaitforFlag(RS);
 
-    for (uint8_t byte : data) {
-        crc ^= byte; // XOR each byte with the CRC
-        for (uint8_t i = 0; i < 8; ++i) {
-            if (crc & 0x80) { // MSB is 1
-                crc = (crc << 1) ^ polynomial; // Shift and apply polynomial
-            } else {
-                crc <<= 1; // Just shift
+    for (int i = 0; i < PackageSize; i++) {
+
+        uint8_t UBits = drvm.ReadData();
+        uint8_t LBits = drvm.ReadData();
+        
+        ReverseBits(LBits);
+
+        uint8_t comb = LBits | UBits;
+        std::cerr << std::bitset<8>(comb) << std::endl;
+        receivedData.push_back(comb); // Combine UBits and LBits
+    }
+    return receivedData;
+}
+
+std::vector<uint8_t> Reciever::CompareReps(std::vector<uint8_t> &Version1, std::vector<uint8_t> &Version2, std::vector<uint8_t> &Version3) {
+    std::vector<uint8_t> result;
+    size_t size = Version1.size(); //All three vectors are the same size
+
+    for (size_t i = 0; i < size; ++i) {
+        uint8_t v1 = Version1[i];
+        uint8_t v2 = Version2[i];
+        uint8_t v3 = Version3[i];
+
+        if (v1 == v2 || v1 == v3) {
+            result.push_back(v1);
+        } else if (v2 == v3) {
+            result.push_back(v2);
+        } else {
+            //Compare each individual bit of the elements
+            uint8_t consensus = 0;
+            for (int bit = 0; bit < 8; ++bit) {
+                int count1 = (v1 >> bit) & 1;
+                int count2 = (v2 >> bit) & 1;
+                int count3 = (v3 >> bit) & 1;
+
+                int sum = count1 + count2 + count3;
+                if (sum >= 2) {
+                    consensus |= (1 << bit);
+                }
             }
+            result.push_back(consensus);
         }
     }
-    std::cerr << "Reciever > Calculated CRC: " << std::bitset<8>(crc) << std::endl;
-    return crc;
-} */
+    return result;
+}
 
 void Reciever::ReverseBits(uint8_t &value) {
     uint8_t original = value;
