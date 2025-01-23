@@ -87,14 +87,17 @@ void Reciever::GetData(bool &isFinished) {
     drvm.SetToNull();
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
-        drvm.Wait(1);
+        //drvm.Wait(1);
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
         std::cerr << " ";
-        std::cerr << std::bitset<8>((UBits << 4) | LBits) << std::endl;
+
+        uint8_t comb = (UBits << 4) | LBits;
+        std::cerr << std::bitset<8>(comb) << std::endl;
         
-        receivedData.push_back((UBits << 4) | LBits); // Combine UBits and LBits
+        receivedData.push_back(comb); // Combine UBits and LBits
     }
+    
     std::cerr << std::endl;
 
     drvm.SetToNull();
