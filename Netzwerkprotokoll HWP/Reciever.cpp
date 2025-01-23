@@ -92,6 +92,9 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
         std::cerr << "Upper: " << std::bitset<8>(UBits) << " , Lower: " << std::bitset<8>(LBits) << std::endl;
+        drvm.Invert(LBits);
+        std::cerr << "Lower inverted: " << std::bitset<8>(LBits) << std::endl;
+        std::cerr << "Shifted Lower: " << std::bitset<8>(LBits >> 4) << std::endl;
 
         uint8_t comb = (LBits << 4) | (UBits >> 4);
         std::cerr << std::bitset<8>(comb) << std::endl;
