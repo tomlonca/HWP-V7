@@ -24,7 +24,8 @@ class Reciever {
         void StartCommunication();
         void Synch();
         void getFlag();
-        uint8_t CalculateCRC8(const std::vector<uint8_t>& data);
+        //uint8_t CalculateCRC8(const std::vector<uint8_t>& data);
+        uint8_t CalculateCRC8(std::vector<uint8_t> vector);
         void WaitforFlag(const uint8_t &FLAG);
         uint8_t GetCRC();
         int GetPackageSizeFromWriter();
