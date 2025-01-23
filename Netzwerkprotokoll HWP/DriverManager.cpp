@@ -23,18 +23,6 @@ void DriverManager::SendData(uint8_t data) {
     drv.setRegister(&PORTA, LBits);
 }
 
-void DriverManager::SendMessageData(uint8_t data) {
-
-    uint8_t LBits, UBits;
-    UBits = (data >> 4) & 0x0F; //upper 4 bits
-    LBits = data & 0x0F; //lower 4 bits
-
-    drv.setRegister(&PORTA, UBits);
-    Wait(5);
-    drv.setRegister(&PORTA, LBits);
-    Wait(5);
-}
-
 void DriverManager::SendFlag(const uint8_t FLAG) {
     SetToNull();
     

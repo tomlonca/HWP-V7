@@ -89,9 +89,7 @@ void Reciever::GetData(bool &isFinished) {
     std::cerr << "Reciever > Reading data..." << std::endl;
     for (int i = 0; i < PackageSize; i++) {
         uint8_t UBits = drvm.ReadData();
-        drvm.Wait(5);
         uint8_t LBits = drvm.ReadData();
-        drvm.Wait(5);
         
         ReverseBits(LBits);
 
