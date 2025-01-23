@@ -52,6 +52,7 @@ uint8_t DriverManager::ReadData() {
 }
 
 int DriverManager::GetPackageSize() {
+    std::cerr << "DriverManager > Returned package size: " << PackageSize << std::endl;
     return PackageSize;
 }
 
