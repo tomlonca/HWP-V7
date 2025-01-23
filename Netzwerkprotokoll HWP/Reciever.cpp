@@ -91,6 +91,7 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t UBits = drvm.ReadData();
         drvm.Wait(5);
         uint8_t LBits = drvm.ReadData();
+        Wait(5);
         
         ReverseBits(LBits);
 

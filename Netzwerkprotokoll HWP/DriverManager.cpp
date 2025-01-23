@@ -32,6 +32,7 @@ void DriverManager::SendMessageData(uint8_t data) {
     drv.setRegister(&PORTA, UBits);
     Wait(5);
     drv.setRegister(&PORTA, LBits);
+    Wait(5);
 }
 
 void DriverManager::SendFlag(const uint8_t FLAG) {
