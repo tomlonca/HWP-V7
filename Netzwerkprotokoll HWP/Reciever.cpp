@@ -81,6 +81,7 @@ int Reciever::GetPackageSizeFromWriter() {
 void Reciever::GetData(bool &isFinished) {
     std::vector<uint8_t> receivedData;
     uint8_t R_CRC = GetCRC();
+    std::cerr << "Reciever > Received CRC from Writer: " << std::bitset<8>(R_CRC) << std::endl;
     int PackageSize = static_cast<int>(GetPackageSizeFromWriter());
     WaitforFlag(GS);
 
@@ -91,13 +92,14 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t UBits = drvm.ReadData();
         uint8_t LBits = drvm.ReadData();
         std::cerr << " ";
+        drvm.Invert(LBits);
 
-        uint8_t comb = (UBits << 4) | LBits;
+        uint8_t comb = (UBits << 4) | (LBits >> 4);
         std::cerr << std::bitset<8>(comb) << std::endl;
         
         receivedData.push_back(comb); // Combine UBits and LBits
     }
-    
+
     std::cerr << std::endl;
 
     drvm.SetToNull();
