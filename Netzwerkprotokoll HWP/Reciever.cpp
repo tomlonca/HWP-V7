@@ -94,7 +94,7 @@ void Reciever::GetData(bool &isFinished) {
         std::cerr << " ";
         drvm.Invert(LBits);
 
-        uint8_t comb = (UBits << 4) | (LBits >> 4);
+        uint8_t comb = (UBits << 4) | (LBits << 4);
         std::cerr << std::bitset<8>(comb) << std::endl;
         
         receivedData.push_back(comb); // Combine UBits and LBits
