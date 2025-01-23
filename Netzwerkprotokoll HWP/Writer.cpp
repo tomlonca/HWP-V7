@@ -60,6 +60,11 @@ uint8_t Writer::CalculateCRC(std::vector<uint8_t> vector) {
 void Writer::SendMessage(bool &isFinished) {
     int PackagesAmount = CalculatePackagesAmount();
     std::vector<int> packageSizes = CalculatePackageSizes(PackagesAmount);
+    std::cerr << "Writer > Package sizes: ";
+    for (const auto& size : packageSizes) {
+        std::cerr << size << ", ";
+    }
+    std::cerr << std::endl;
 
     for (int i = 0; i < PackagesAmount; i++) {
         std::cerr << "Writer > Sending package Nr. " << i+1 << std::endl;
@@ -79,10 +84,11 @@ std::vector<int> Writer::CalculatePackageSizes(int PackagesAmount) {
     int remainingSize = msg.getMessageSize();
     int currentPackageSize = 0;
     std::vector<int> packageSizes;
+    int PackageSize = drvm.GetPackageSize();
 
     for (int i = 0; i < PackagesAmount; i++) {
-        if (remainingSize >= drvm.GetPackageSize()) {
-            currentPackageSize = drvm.GetPackageSize();
+        if (remainingSize >= PackageSize) {
+            currentPackageSize = PackageSize;
         } else {
             currentPackageSize = remainingSize;
         }
