@@ -96,7 +96,7 @@ void Reciever::GetData(bool &isFinished) {
         std::cerr << "Lower inverted: " << std::bitset<8>(LBits) << std::endl;
         std::cerr << "Shifted Lower: " << std::bitset<8>(LBits >> 4) << std::endl;
 
-        uint8_t comb = (LBits << 4) | (UBits >> 4);
+        uint8_t comb = LBits | UBits;
         std::cerr << std::bitset<8>(comb) << std::endl;
         
         receivedData.push_back(comb); // Combine UBits and LBits
