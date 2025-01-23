@@ -11,6 +11,7 @@ std::vector<uint8_t> Message::ProcessMessage(const std::string &text) {
     for (char c : text) {
         //Turn each char in uint8_t
         uint8_t bin = static_cast<uint8_t>(c);
+        std::cerr << "Message > " << c << ": " std::bitset<8>(bin);
         BinVector.push_back(bin);
     }
     if (BinVector.empty())
