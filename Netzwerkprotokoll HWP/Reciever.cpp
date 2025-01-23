@@ -93,7 +93,7 @@ void Reciever::GetData(bool &isFinished) {
         uint8_t LBits = drvm.ReadData();
         std::cerr << "Upper: " << std::bitset<8>(UBits) << " , Lower: " << std::bitset<8>(LBits) << std::endl;
         drvm.Invert(LBits);
-        std::cerr << "Lower inverted: " << std::bitset<8>(LBits) << std::endl;
+        std::cerr << "Lower inverted: " << std::bitset<8>(Invert(bits)) << std::endl;
         std::cerr << "Shifted Lower: " << std::bitset<8>(LBits >> 4) << std::endl;
 
         uint8_t comb = (LBits << 4) | (UBits >> 4);
@@ -148,4 +148,8 @@ uint8_t Reciever::CalculateCRC8(const std::vector<uint8_t>& data) {
     }
     std::cerr << "Reciever > Calculated CRC: " << std::bitset<8>(crc) << std::endl;
     return crc;
+}
+
+void Reciever::Invert(uint8_t *value) {
+    *value = ~(*value);
 }

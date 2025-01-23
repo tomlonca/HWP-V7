@@ -26,7 +26,6 @@ class DriverManager {
         int GetPackageSize();
         void SetToNull();
         void Wait(uint16_t ms);
-        void Invert(uint8_t bits);
 };
 
 #endif

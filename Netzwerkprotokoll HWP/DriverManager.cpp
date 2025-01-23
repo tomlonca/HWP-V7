@@ -62,7 +62,3 @@ void DriverManager::SetToNull() {
 void DriverManager::Wait(uint16_t  ms) {
     drv.delay_ms(ms);
 }
-
-void DriverManager::Invert(uint8_t bits) {
-    drv.reverse(bits);
-}
