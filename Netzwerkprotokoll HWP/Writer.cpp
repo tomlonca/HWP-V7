@@ -60,23 +60,16 @@ uint8_t Writer::CalculateCRC(std::vector<uint8_t> vector) {
 void Writer::SendMessage(bool &isFinished) {
     int PackagesAmount = CalculatePackagesAmount();
     std::vector<int> packageSizes = CalculatePackageSizes(PackagesAmount);
-    std::cerr << "Writer > Package sizes: ";
-    for (const auto& size : packageSizes) {
-        std::cerr << size << ", ";
-    }
-    std::cerr << std::endl;
 
-    for (int i = 0; i < PackagesAmount; i++) {
+    int i = 0;
+    while (i < PackagesAmount) {
         std::cerr << "Writer > Sending package Nr. " << i+1 << std::endl;
         std::vector<uint8_t> packageData = msg.getPackageData(i, packageSizes[i]);
-
         std::cerr << "Writer > Package size: " << packageData.size() << std::endl;
-
         uint8_t crc = CalculateCRC(packageData);
-
         SendPackage(packageData, packageSizes[i], crc, i);
+        i += packageSizes[i];
     }
-
     isFinished = true;
 }
 
