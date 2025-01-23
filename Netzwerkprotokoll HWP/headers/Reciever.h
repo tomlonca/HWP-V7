@@ -29,7 +29,7 @@ class Reciever {
         uint8_t GetCRC();
         int GetPackageSizeFromWriter();
         void GetData(bool &isFinished);
-        void Invert(uint8_t *value);
+        void Invert(uint8_t &value);
 };
 
 
