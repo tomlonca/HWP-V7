@@ -19,8 +19,6 @@ void DriverManager::SendData(uint8_t data) {
     UBits = (data >> 4) & 0x0F; //upper 4 bits
     LBits = data & 0x0F; //lower 4 bits
 
-    std::cerr << std::bitset<4>(UBits) << " " << std::bitset<4>(LBits);
-
     drv.setRegister(&PORTA, UBits);
     drv.setRegister(&PORTA, LBits);
 }
@@ -52,7 +50,6 @@ uint8_t DriverManager::ReadData() {
 }
 
 int DriverManager::GetPackageSize() {
-    std::cerr << "DriverManager > Returned package size: " << PackageSize << std::endl;
     return PackageSize;
 }
 
