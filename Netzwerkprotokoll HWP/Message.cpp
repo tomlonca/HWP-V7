@@ -25,7 +25,7 @@ std::vector<uint8_t> Message::getPackageData(int i, int j) {
     int BinVectorSize = BinVector.size();
 
     if (i >= 0 && j < BinVectorSize && i <= j) {
-        subVector.insert(subVector.end(), BinVector.begin() + i, BinVector.begin() + j + 1);
+        subVector.insert(subVector.end(), BinVector.begin() + i, BinVector.begin() + j - 1);
     } else {
         std::cerr << "Message > Invalid indices for getPackageData: i = " << i << ", j = " << j << std::endl;
     }

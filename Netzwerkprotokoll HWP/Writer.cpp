@@ -67,13 +67,12 @@ void Writer::SendMessage(bool &isFinished) {
         std::cerr << "Writer > Sending package Nr. " << i+1 << std::endl;
         std::vector<uint8_t> packageData;
         packageData = msg.getPackageData(i, packageSizes[i]);
+      
         std::cerr << "Writer > Package size: " << packageData.size() << std::endl;
-
         uint8_t crc = CalculateCRC(packageData);
-
         SendPackage(packageData, packageSizes[i], crc, i);
+        i += packageSizes[i];
     }
-
     isFinished = true;
 }
 
@@ -81,10 +80,11 @@ std::vector<int> Writer::CalculatePackageSizes(int PackagesAmount) {
     int remainingSize = msg.getMessageSize();
     int currentPackageSize = 0;
     std::vector<int> packageSizes;
+    int PackageSize = drvm.GetPackageSize();
 
     for (int i = 0; i < PackagesAmount; i++) {
-        if (remainingSize >= drvm.GetPackageSize()) {
-            currentPackageSize = drvm.GetPackageSize();
+        if (remainingSize >= PackageSize) {
+            currentPackageSize = PackageSize;
         } else {
             currentPackageSize = remainingSize;
         }
