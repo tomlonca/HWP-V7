@@ -31,8 +31,8 @@ class Reciever {
         int GetPackageSizeFromWriter();
         void GetData(bool &isFinished);
         void ReverseBits(uint8_t &value);
+        std::vector<uint8_t> GetRepetition(int &PackageSize);
+        std::vector<uint8_t> CompareReps(std::vector<uint8_t> &Version1, std::vector<uint8_t> &Version2, std::vector<uint8_t> &Version3);
 };
-
-
 
 #endif
