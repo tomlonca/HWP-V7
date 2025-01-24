@@ -61,7 +61,7 @@ uint8_t Writer::CalculateCRC(std::vector<uint8_t> vector) {
 void Writer::SendMessage(bool &isFinished) {
     int PackagesAmount = CalculatePackagesAmount();
     std::vector<int> packageSizes = CalculatePackageSizes(PackagesAmount);
-    int currentpackage = 0
+    int currentpackage = 0;
 
     for (int i = 0; i < PackagesAmount; i ++) {
         std::cerr << "Writer > Sending package Nr. " << i+1 << std::endl;
