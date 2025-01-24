@@ -61,7 +61,7 @@ void Writer::SendMessage(bool &isFinished) {
     int PackagesAmount = CalculatePackagesAmount();
     std::vector<int> packageSizes = CalculatePackageSizes(PackagesAmount);
 
-    for (int i = 0; i < PackagesAmount; i++) {
+    for (int i = 0; i < PackagesAmount; i += packageSizes[i]) {
         std::cerr << "Writer > Sending package Nr. " << i+1 << std::endl;
         std::vector<uint8_t> packageData = msg.getPackageData(i, packageSizes[i]);
 
