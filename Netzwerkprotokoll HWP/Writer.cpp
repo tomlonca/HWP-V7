@@ -21,6 +21,7 @@ void Writer::StartCommunication() {
     while (!isFinished) {
         SendMessage(isFinished);
     }
+    std::cerr << "Writer > Message sent. Closing communication protocol.." << std::endl;
     drvm.SendFlag(EOT); //end of transmission
 }
 

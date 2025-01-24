@@ -3,7 +3,7 @@
 #include "./headers/Flags.h"
 
 Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) {
-    InputFile.open(InputFileName, std::ios::binary);
+    InputFile.open(InputFileName, std::ios::binary | std::ios::out);
     if (!InputFile.is_open()) {
         std::cerr << "Reciever > Error opening InputFile " << std::endl;
     }
