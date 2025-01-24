@@ -2,11 +2,7 @@
 #include "./headers/DriverManager.h"
 #include "./headers/Flags.h"
 
-Reciever::Reciever(DriverManager &drvm, std::string InputFileName) : drvm(drvm) {
-    InputFile.open(InputFileName);
-    if (!InputFile.is_open()) {
-        std::cerr << "Reciever > Error opening InputFile " << std::endl;
-    }
+Reciever::Reciever(DriverManager &drvm) : drvm(drvm) {
     drvm.SetToNull();
 }
 
@@ -109,7 +105,6 @@ void Reciever::GetData(bool &isFinished) {
         data.append(dataStr);
         std::cerr << "Reciever > Data stored in data variable." << std::endl;
         std::cout << data << std::endl;
-        InputFile << data;
 
         if (drvm.ReadData() == EOT) {
             std::cerr << std::endl <<"Reciever > EOT flag received. No more data to read." << std::endl;

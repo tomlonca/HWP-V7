@@ -15,11 +15,10 @@
 class Reciever {
     private:
         DriverManager& drvm;
-        std::fstream InputFile;
         std::string data;
         
     public:
-        Reciever(DriverManager &drvm, std::string InputFileName);
+        Reciever(DriverManager &drvm);
         void SaveStringInFile(std::string text);
         void StartCommunication();
         void Synch();

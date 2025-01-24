@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     } 
     else {
         std::string filename = "InputFile.txt";
-        Reciever reciever = Reciever(drvm, filename); //File to store recieved data
+        Reciever reciever = Reciever(drvm); //File to store recieved data
         reciever.StartCommunication();
     }
 
