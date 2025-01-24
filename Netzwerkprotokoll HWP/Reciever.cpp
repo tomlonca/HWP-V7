@@ -108,6 +108,8 @@ void Reciever::GetData(bool &isFinished) {
         std::string dataStr(FinalVersion.begin(), FinalVersion.end());
         data.append(dataStr);
         std::cerr << "Reciever > Data stored in data variable." << std::endl;
+        std::cout << data << std::endl;
+        InputFile << data;
 
         if (drvm.ReadData() == EOT) {
             std::cerr << std::endl <<"Reciever > EOT flag received. No more data to read." << std::endl;
