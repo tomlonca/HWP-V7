@@ -21,15 +21,6 @@ int main(int argc, char* argv[]) {
 
     std::string text;
 
-    // Parse command line arguments
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-w") == 0) {
-            isWriter = true;
-        } else if (strcmp(argv[i], "-r") == 0) {
-            isWriter = false;
-        }
-    }
-
     if (argc > 1 && strcmp(argv[1], "-r") != 0 && strcmp(argv[1], "-w") != 0) {
         // If a filename is provided, read from the file
         std::string filename = argv[1];
@@ -43,7 +34,7 @@ int main(int argc, char* argv[]) {
         oss << OutputFile.rdbuf();
         text = oss.str();
         std::cerr << "Main > Read " << text.size() << " bytes from file: " << filename << std::endl;
-    } else {
+    } else if (isWriter) {
         // No filename provided, read from stdin
         std::ostringstream oss;
         oss << std::cin.rdbuf();
@@ -63,7 +54,7 @@ int main(int argc, char* argv[]) {
     } 
     else {
         std::string filename = "InputFile.txt";
-        Reciever reciever = Reciever(drvm, filename); //File to store recieved data
+        Reciever reciever = Reciever(drvm); //File to store recieved data
         reciever.StartCommunication();
     }
 
