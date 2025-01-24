@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
         oss << OutputFile.rdbuf();
         text = oss.str();
         std::cerr << "Main > Read " << text.size() << " bytes from file: " << filename << std::endl;
-    } else {
+    } else if (isWriter) {
         // No filename provided, read from stdin
         std::ostringstream oss;
         oss << std::cin.rdbuf();
